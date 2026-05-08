@@ -4,11 +4,12 @@ int main()
 {
     int n = 10000;
 
+    /* allocation du tableau de drones */
     Drone *essaim = (Drone *)malloc(n * sizeof(Drone));
 
     if (essaim == NULL)
     {
-        printf("Erreur critique : allocation memoire impossible\n");
+        printf("Erreur : allocation memoire impossible\n");
         return 1;
     }
 
@@ -17,29 +18,28 @@ int main()
     int i;
     Drone *curseur = essaim;
 
+    /* initialisation aleatoire des coordonnees de chaque drone */
     for (i = 0; i < n; i++)
     {
         curseur->id = i + 1;
         curseur->x  = (float)(rand() % 10000);
         curseur->y  = (float)(rand() % 10000);
         curseur->z  = (float)(rand() % 10000);
-        curseur++;
+        curseur++; /* on passe au drone suivant */
     }
 
+    /* mesure du temps d'execution de l'algorithme */
     clock_t debut = clock();
 
-    /* Etape 1 : algorithme optimise Divide & Conquer -> O(n log^2 n) */
     float minDistance = closest(essaim, n);
 
-    clock_t fin   = clock();
-    double  temps = ((double)(fin - debut)) / CLOCKS_PER_SEC;
+    clock_t fin  = clock();
+    double temps = ((double)(fin - debut)) / CLOCKS_PER_SEC;
 
-    /* Etape 2 : identification des deux drones concernes.
-     * On parcourt une seule fois le tableau en cherchant
-     * la paire dont la distance correspond a minDistance.
-     * On utilise une tolerance flottante pour la comparaison. */
+    /* recherche des deux drones correspondant a la distance minimale
+     * on utilise une tolerance car les flottants ne sont jamais exactement egaux */
     Drone drone1, drone2;
-    int   trouve = 0;
+    int   trouve    = 0;
     float tolerance = 0.001f;
 
     for (i = 0; i < n && !trouve; i++)
@@ -58,7 +58,7 @@ int main()
         }
     }
 
-    /* Affichage des resultats */
+    /* affichage des resultats */
     printf("=== RESULTAT ===\n");
     printf("Distance minimale : %f\n\n", minDistance);
 
@@ -76,8 +76,11 @@ int main()
 
     printf("\nTemps d'execution : %.6f secondes\n", temps);
 
+    /* liberation de la memoire */
     free(essaim);
     essaim = NULL;
 
+    return 0;
+}
     return 0;
 }
