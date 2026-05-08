@@ -7,10 +7,7 @@
 #include <float.h>
 #include <time.h>
 
-/*
- * Structure representant un drone dans l'espace 3D.
- * Chaque drone possede un identifiant unique et trois coordonnees flottantes.
- */
+/* structure d'un drone dans l'espace 3D */
 typedef struct
 {
     int   id;
@@ -20,22 +17,24 @@ typedef struct
 
 } Drone;
 
-/* Calcule la distance euclidienne entre deux drones dans l'espace 3D */
+/* distance euclidienne entre deux drones */
 float distanceDrone(Drone *a, Drone *b);
 
-/* Fonction de comparaison pour le tri rapide (qsort) selon l'axe X */
+/* comparaison pour trier par X */
 int compareX(const void *a, const void *b);
 
-/* Fonction de comparaison pour le tri rapide (qsort) selon l'axe Y */
+/* comparaison pour trier par Y */
 int compareY(const void *a, const void *b);
 
-/* Recherche naïve en O(n^2) : compare toutes les paires possibles */
+/* recherche naive O(n^2) */
 float bruteForce(Drone *tab, int n);
 
-/* Coeur recursif de l'algorithme Divide & Conquer */
+/* algorithme recursif Divide & Conquer */
 float closestUtil(Drone *tab, int n);
 
-/* Fonction principale : trie le tableau puis lance la recherche optimisee */
+/* fonction principale */
 float closest(Drone *tab, int n);
+
+#endif*tab, int n);
 
 #endif
